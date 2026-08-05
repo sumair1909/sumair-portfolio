@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,6 +24,7 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
                         dark: '#0a0a0a',
@@ -105,6 +106,40 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Grid background overlay */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Status pulse dot */
+        .status-dot {
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(139, 92, 246, 0); }
+        }
+
+        /* Terminal form messages */
+        .terminal-error {
+            font-family: 'JetBrains Mono', monospace;
+            color: #f87171;
+            font-size: 0.75rem;
+        }
+        .terminal-success {
+            font-family: 'JetBrains Mono', monospace;
+            color: #4ade80;
+            font-size: 0.875rem;
+        }
+
+        /* Nav scroll-spy active state */
+        .nav-link-active {
+            color: #8b5cf6 !important;
+        }
     </style>
 </head>
 <body class="bg-dark text-slate-300 font-sans selection:bg-accent selection:text-white overflow-x-hidden">
@@ -122,9 +157,9 @@
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#work" class="hover:text-white transition-colors">Work</a>
-                <a href="#about" class="hover:text-white transition-colors">About</a>
-                <a href="#services" class="hover:text-white transition-colors">Expertise</a>
+                <a href="#work" data-nav="work" class="nav-link hover:text-white transition-colors">Work</a>
+                <a href="#about" data-nav="about" class="nav-link hover:text-white transition-colors">About</a>
+                <a href="#services" data-nav="services" class="nav-link hover:text-white transition-colors">Expertise</a>
                 <a href="#contact" class="px-5 py-2 rounded-full border border-white/10 hover:bg-white hover:text-dark transition-all duration-300">Let's Talk</a>
             </div>
 
@@ -146,9 +181,18 @@
 
     <!-- Hero Section -->
     <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20 relative overflow-hidden">
-        <div class="max-w-5xl mx-auto w-full z-10">
+        <!-- Grid overlay -->
+        <div class="absolute inset-0 grid-bg opacity-60 pointer-events-none"></div>
+        <!-- Gradient orbs -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none opacity-50"></div>
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] pointer-events-none opacity-30"></div>
+
+        <div class="max-w-5xl mx-auto w-full z-10 border-l-2 border-accent/50 pl-6 md:pl-8">
             <div class="reveal delay-100">
-                <span class="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-xs font-medium tracking-wider mb-6 text-accent">FULL-STACK & AI DEVELOPER</span>
+                <span class="inline-flex items-center gap-2 font-mono text-sm text-accent mb-6">
+                    <span class="status-dot w-2 h-2 bg-accent rounded-full inline-block"></span>
+                    AVAILABLE FOR WORK // 2025
+                </span>
             </div>
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-white leading-[1.1] mb-8 reveal delay-200">
                 Turning complex ideas into <br>
@@ -176,7 +220,10 @@
     <section id="services" class="pt-24 pb-8 px-6 md:px-12 border-t border-white/5 bg-dark">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start mb-16 reveal">
-                <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4 md:mb-0">What I'm Good At</h2>
+                <div>
+                    <p class="font-mono text-xs text-accent/80 tracking-widest mb-3">// EXPERTISE</p>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4 md:mb-0">What I'm Good At</h2>
+                </div>
                 <p class="max-w-md text-slate-400">Delivering results like a team of 10, thanks to AI tools and 4+ years of extensive full-stack experience.</p>
             </div>
 
@@ -214,57 +261,74 @@
     <!-- Selected Work -->
     <section id="work" class="pt-8 pb-24 px-6 md:px-12 bg-dark">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-12 reveal">Recent Wins</h2>
+            <div class="reveal mb-12">
+                <p class="font-mono text-xs text-accent/80 tracking-widest mb-3">// SELECTED_WORK</p>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-white">Recent Wins</h2>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 
-                <!-- Project 1: Sizzle App (Updated Link) -->
-                <a href="https://apps.apple.com/us/app/sizzle-discover-shop-cook/id6479204497" target="_blank" class="group cursor-pointer reveal">
+                <!-- Project 1: Sizzle App -->
+                <a href="https://apps.apple.com/us/app/sizzle-discover-shop-cook/id6479204497" target="_blank" class="group cursor-pointer reveal border border-white/5 rounded-2xl p-4 hover:border-accent/30 transition-all duration-300">
                     <div class="relative overflow-hidden rounded-2xl aspect-[4/3] mb-6">
+                        <span class="absolute top-4 left-4 z-20 glass px-3 py-1 rounded text-xs font-mono text-accent tracking-wide">LIVE ON APP STORE</span>
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all z-10"></div>
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2000&auto=format&fit=crop" alt="Sizzle App" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                     </div>
-                    <div class="flex justify-between items-start">
+                    <div class="flex justify-between items-start px-1">
                         <div>
                             <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-accent transition-colors">Sizzle App</h3>
-                            <p class="text-slate-400 text-sm">Scaled to $50K MRR in 3 months • 60% Reduced Infra Costs</p>
+                            <p class="text-slate-400 text-sm mb-3">Scaled to $50K MRR in 3 months • 60% Reduced Infra Costs</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="font-mono text-xs text-slate-500">#Flutter</span>
+                                <span class="font-mono text-xs text-slate-500">#Node.js</span>
+                            </div>
                         </div>
-                        <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-dark transition-all">
+                        <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-dark transition-all shrink-0">
                             <i class="ph ph-arrow-up-right"></i>
                         </span>
                     </div>
                 </a>
 
-                <!-- Project 2: Merlin AI (Updated Link) -->
-                <a href="https://apps.apple.com/us/app/merlin-ai-ai-chat-assistant/id6453692447" target="_blank" class="group cursor-pointer reveal delay-200">
+                <!-- Project 2: Merlin AI -->
+                <a href="https://apps.apple.com/us/app/merlin-ai-ai-chat-assistant/id6453692447" target="_blank" class="group cursor-pointer reveal delay-200 border border-white/5 rounded-2xl p-4 hover:border-accent/30 transition-all duration-300">
                     <div class="relative overflow-hidden rounded-2xl aspect-[4/3] mb-6">
+                        <span class="absolute top-4 left-4 z-20 glass px-3 py-1 rounded text-xs font-mono text-accent tracking-wide">LIVE ON APP STORE</span>
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all z-10"></div>
                         <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2000&auto=format&fit=crop" alt="Merlin AI" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                     </div>
-                    <div class="flex justify-between items-start">
+                    <div class="flex justify-between items-start px-1">
                         <div>
                             <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-accent transition-colors">Merlin AI</h3>
-                            <p class="text-slate-400 text-sm">Thriving User Base • AI & Vector DB Integration</p>
+                            <p class="text-slate-400 text-sm mb-3">Thriving User Base • AI & Vector DB Integration</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="font-mono text-xs text-slate-500">#OpenAI</span>
+                                <span class="font-mono text-xs text-slate-500">#VectorDB</span>
+                            </div>
                         </div>
-                        <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-dark transition-all">
+                        <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-dark transition-all shrink-0">
                             <i class="ph ph-arrow-up-right"></i>
                         </span>
                     </div>
                 </a>
 
-                <!-- Project 3: Gently AI (New) -->
-                <a href="https://apps.apple.com/in/app/gently-ai-skincare-assistant/id6753112994" target="_blank" class="group cursor-pointer reveal">
+                <!-- Project 3: Gently AI -->
+                <a href="https://apps.apple.com/in/app/gently-ai-skincare-assistant/id6753112994" target="_blank" class="group cursor-pointer reveal border border-white/5 rounded-2xl p-4 hover:border-accent/30 transition-all duration-300">
                     <div class="relative overflow-hidden rounded-2xl aspect-[4/3] mb-6">
+                        <span class="absolute top-4 left-4 z-20 glass px-3 py-1 rounded text-xs font-mono text-accent tracking-wide">LIVE ON APP STORE</span>
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all z-10"></div>
-                        <!-- Using a relevant skincare/tech image -->
                         <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=2000&auto=format&fit=crop" alt="Gently AI" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                     </div>
-                    <div class="flex justify-between items-start">
+                    <div class="flex justify-between items-start px-1">
                         <div>
                             <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-accent transition-colors">Gently – AI Skincare</h3>
-                            <p class="text-slate-400 text-sm">AI Skincare Assistant • iOS App</p>
+                            <p class="text-slate-400 text-sm mb-3">AI Skincare Assistant • iOS App</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="font-mono text-xs text-slate-500">#Flutter</span>
+                                <span class="font-mono text-xs text-slate-500">#AI</span>
+                            </div>
                         </div>
-                        <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-dark transition-all">
+                        <span class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-dark transition-all shrink-0">
                             <i class="ph ph-arrow-up-right"></i>
                         </span>
                     </div>
@@ -277,21 +341,22 @@
     <!-- About Section -->
     <section id="about" class="py-24 px-6 md:px-12 border-t border-white/5 bg-dark">
         <div class="max-w-4xl mx-auto text-center reveal">
+            <p class="font-mono text-xs text-accent/80 tracking-widest mb-3">// ABOUT</p>
             <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-8">Why Work With Me?</h2>
             <p class="text-lg text-slate-400 leading-relaxed mb-10">
                 I'm <strong>timezone-agnostic</strong> and have extensive experience leading distributed engineering teams globally. Whether you're in Silicon Valley or Singapore, I know how to keep everyone aligned. I thrive in collaborative environments but can also go solo, delivering results like a team of 10 developers thanks to my deep expertise with AI tools.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">Flutter & React Native</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">Python (Flask/Django/FastAPI)</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">React & Next.js</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">OpenAI & RAG</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">Pinecone/ChromaDB</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">Node.js</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">Figma</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">LangChain</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">GCP</span>
-                <span class="px-4 py-2 bg-white/5 rounded-lg text-sm border border-white/5">AWS</span>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[Flutter & React Native]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[Python]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[React & Next.js]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[OpenAI & RAG]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[Pinecone/ChromaDB]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[Node.js]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[Figma]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[LangChain]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[GCP]</span>
+                <span class="px-3 py-1.5 bg-white/5 rounded text-xs font-mono border border-white/5 hover:border-accent/20 transition-colors">[AWS]</span>
             </div>
         </div>
     </section>
@@ -301,25 +366,55 @@
         <!-- Abstract gradient blob -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/20 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
 
-        <div class="max-w-3xl mx-auto text-center reveal">
-            <h2 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 tracking-tight">Ready to build?</h2>
-            <p class="text-xl text-slate-400 mb-10">Let's create something awesome together.</p>
-            
-            <a href="mailto:hello@example.com" class="inline-flex items-center gap-3 bg-white text-dark px-10 py-5 rounded-full font-bold text-lg hover:bg-accent hover:text-white transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]">
-                <span>Start a Project</span>
-                <i class="ph ph-arrow-right font-bold"></i>
-            </a>
-
-            <div class="mt-16 flex justify-center gap-8 text-2xl text-slate-400">
-                <a href="https://github.com/sumair1909" target="_blank" class="hover:text-white hover:-translate-y-1 transition-all"><i class="ph ph-github-logo"></i></a>
-                <a href="https://x.com/sumair1909" target="_blank" class="hover:text-white hover:-translate-y-1 transition-all"><i class="ph ph-twitter-logo"></i></a>
-                <a href="https://www.linkedin.com/in/sumair-bais-4782181ba/" target="_blank" class="hover:text-white hover:-translate-y-1 transition-all"><i class="ph ph-linkedin-logo"></i></a>
+        <div class="max-w-2xl mx-auto reveal">
+            <div class="text-center mb-10">
+                <p class="font-mono text-xs text-accent/80 tracking-widest mb-3">// CONTACT</p>
+                <h2 class="text-5xl md:text-6xl font-display font-bold text-white mb-4 tracking-tight">Ready to build?</h2>
+                <p class="text-xl text-slate-400">Let's create something awesome together.</p>
             </div>
+
+            <!-- Replace YOUR_FORM_ID with your Formspree form ID: https://formspree.io -->
+            <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="glass rounded-2xl p-6 md:p-8 text-left space-y-6">
+                <p class="font-mono text-sm text-accent/70 mb-2">sumair@dev:~$ tracepath contact_me</p>
+
+                <div>
+                    <label for="user_name" class="block font-mono text-xs text-slate-400 mb-2">var user_name</label>
+                    <input type="text" id="user_name" name="name" class="w-full bg-dark/80 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none transition-colors" placeholder="Enter full name">
+                    <p id="error-name" class="terminal-error mt-2 hidden"></p>
+                </div>
+
+                <div>
+                    <label for="contact_email" class="block font-mono text-xs text-slate-400 mb-2">var contact_email</label>
+                    <input type="email" id="contact_email" name="email" class="w-full bg-dark/80 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none transition-colors" placeholder="you@example.com">
+                    <p id="error-email" class="terminal-error mt-2 hidden"></p>
+                </div>
+
+                <div>
+                    <label for="message_body" class="block font-mono text-xs text-slate-400 mb-2">const message_body</label>
+                    <textarea id="message_body" name="message" rows="5" class="w-full bg-dark/80 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+                    <p id="error-message" class="terminal-error mt-2 hidden"></p>
+                </div>
+
+                <p id="form-success" class="terminal-success hidden"></p>
+                <p id="form-error" class="terminal-error hidden"></p>
+
+                <button type="submit" id="submit-btn" class="w-full inline-flex items-center justify-center gap-3 bg-white text-dark px-8 py-4 rounded-full font-bold text-lg hover:bg-accent hover:text-white transition-all duration-300">
+                    <span>Initialize Connection</span>
+                    <i class="ph ph-arrow-right font-bold"></i>
+                </button>
+            </form>
         </div>
     </section>
 
-    <footer class="py-8 px-6 border-t border-white/5 text-center text-slate-500 text-sm">
-        <p>&copy; 2025 Sumair Portfolio. All Rights Reserved.</p>
+    <footer class="py-8 px-6 md:px-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-slate-500 text-sm">&copy; 2025 Sumair Portfolio. All Rights Reserved.</p>
+            <div class="flex items-center gap-6 text-xl text-slate-400">
+                <a href="https://github.com/sumair1909" target="_blank" class="hover:text-white hover:-translate-y-1 transition-all" aria-label="GitHub"><i class="ph ph-github-logo"></i></a>
+                <a href="https://x.com/sumair1909" target="_blank" class="hover:text-white hover:-translate-y-1 transition-all" aria-label="X"><i class="ph ph-twitter-logo"></i></a>
+                <a href="https://www.linkedin.com/in/sumair-bais-4782181ba/" target="_blank" class="hover:text-white hover:-translate-y-1 transition-all" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -445,6 +540,109 @@
         
         mobileLinks.forEach(link => {
             link.addEventListener('click', toggleMenu);
+        });
+
+
+        // --- 5. Contact Form Validation & Formspree Submit ---
+        const contactForm = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const formSuccess = document.getElementById('form-success');
+        const formError = document.getElementById('form-error');
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function showFieldError(id, message) {
+            const el = document.getElementById(id);
+            el.textContent = message;
+            el.classList.remove('hidden');
+        }
+
+        function hideFieldErrors() {
+            ['error-name', 'error-email', 'error-message'].forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.add('hidden');
+                el.textContent = '';
+            });
+            formSuccess.classList.add('hidden');
+            formError.classList.add('hidden');
+        }
+
+        function validateForm() {
+            hideFieldErrors();
+            let valid = true;
+
+            const name = document.getElementById('user_name').value.trim();
+            const email = document.getElementById('contact_email').value.trim();
+            const message = document.getElementById('message_body').value.trim();
+
+            if (!name) {
+                showFieldError('error-name', '> Error: Field required');
+                valid = false;
+            }
+            if (!email) {
+                showFieldError('error-email', '> Error: Field required');
+                valid = false;
+            } else if (!emailRegex.test(email)) {
+                showFieldError('error-email', '> Error: Invalid email format');
+                valid = false;
+            }
+            if (!message) {
+                showFieldError('error-message', '> Error: Payload empty');
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!validateForm()) return;
+
+            submitBtn.disabled = true;
+            submitBtn.querySelector('span').textContent = '_ processing...';
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    formSuccess.textContent = '> Message sent successfully!';
+                    formSuccess.classList.remove('hidden');
+                    contactForm.reset();
+                } else {
+                    formError.textContent = '> Error: Failed to send message. Please try again.';
+                    formError.classList.remove('hidden');
+                }
+            } catch {
+                formError.textContent = '> Error: Failed to send message. Please try again.';
+                formError.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('span').textContent = 'Initialize Connection';
+            }
+        });
+
+
+        // --- 6. Nav Scroll Spy ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = ['work', 'about', 'services', 'contact'].map(id => document.getElementById(id));
+
+        const scrollSpyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.toggle('nav-link-active', link.dataset.nav === id);
+                    });
+                }
+            });
+        }, { threshold: 0.3, rootMargin: '-20% 0px -60% 0px' });
+
+        sections.forEach(section => {
+            if (section) scrollSpyObserver.observe(section);
         });
 
     </script>
