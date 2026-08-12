@@ -338,6 +338,76 @@
         </div>
     </section>
 
+    <!-- Featured Backend Project -->
+    <section class="pb-24 px-6 md:px-12 bg-dark">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass rounded-3xl p-8 md:p-12 reveal">
+                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 mb-10">
+                    <div class="max-w-3xl">
+                        <span class="inline-block py-1 px-3 rounded-full bg-accent/10 border border-accent/20 text-xs font-medium tracking-wider mb-5 text-accent">FEATURED BACKEND PROJECT</span>
+                        <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-5">Email Verification API</h2>
+                        <p class="text-lg text-slate-300 leading-relaxed mb-4">
+                            A production-ready Node.js and Express API that validates email addresses with RFC-oriented syntax checks, DNS and MX lookups, optional SMTP RCPT-TO probing, and explainable risk scoring.
+                        </p>
+                        <p class="text-slate-400 leading-relaxed">
+                            Built to handle real-world delivery edge cases, the API returns a clear verdict, structured diagnostics, and a documented 0-10 risk score while staying safe for hosted deployments where outbound SMTP can be restricted.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 min-w-full lg:min-w-[320px] lg:max-w-sm">
+                        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+                            <p class="text-sm text-slate-400 mb-2">Core Stack</p>
+                            <p class="text-white font-semibold">Node.js, Express, OpenAPI</p>
+                        </div>
+                        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+                            <p class="text-sm text-slate-400 mb-2">Verification Flow</p>
+                            <p class="text-white font-semibold">Syntax, DNS/MX, SMTP</p>
+                        </div>
+                        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+                            <p class="text-sm text-slate-400 mb-2">Risk Model</p>
+                            <p class="text-white font-semibold">0-10 score with labels</p>
+                        </div>
+                        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+                            <p class="text-sm text-slate-400 mb-2">Production Ready</p>
+                            <p class="text-white font-semibold">Rate limiting and timeouts</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+                        <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent text-2xl mb-5">
+                            <i class="ph ph-envelope-simple-open"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Multi-layer verification</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Verifies email quality progressively with validator-based syntax checks, long-lived DNS resolver lookups, MX discovery, and optional mailbox acceptance probing.
+                        </p>
+                    </div>
+
+                    <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+                        <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent text-2xl mb-5">
+                            <i class="ph ph-shield-check"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Explainable risk scoring</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Returns a transparent risk score based on disposable domains, role accounts, free-mail providers, and other heuristics so product teams can make safer signup decisions.
+                        </p>
+                    </div>
+
+                    <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+                        <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent text-2xl mb-5">
+                            <i class="ph ph-cloud"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Operationally practical</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Accounts for platform constraints like blocked outbound port 25 on Heroku, with environment-driven toggles, SMTP budgets, and sensible hosted defaults.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="py-24 px-6 md:px-12 border-t border-white/5 bg-dark">
         <div class="max-w-4xl mx-auto text-center reveal">
